@@ -1,1 +1,80 @@
-<p>perguntas works!</p>
+<div *ngIf="loading">
+  CARREGANDO
+</div>
+
+<div *ngIf="!loading"
+     class="container d-flex align-items-center justify-content-center"
+     style="min-height: 100vh">
+  <div class="d-flex flex-column justify-content-between">
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+        <div class="card card-default mb-0">
+
+          <div class="card-header pb-0">
+            <div class="app-brand w-100 d-flex justify-content-start border-bottom-0">
+              <a class="w-auto pl-0" href="/index.html">
+                <img alt="PUC" height="75" src="https://seeklogo.com/images/P/puc-goias-logo-06AD67F0EA-seeklogo.com.png" width="100%">
+                <span class="brand-name text-dark">PUC</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="card-body px-5 pb-5 pt-0">
+
+            <h4 class="text-dark mb-6 text-center">Perguntas</h4>
+
+            <form (submit)="onSubmit($event)"
+                  [formGroup]="form">
+              <div class="row">
+                <div class="form-group col-md-12 mb-4">
+                  <input class="form-control input-lg"
+                         formControlName="descricao"
+                         id="descricao"
+                         placeholder="Descrição"
+                         type="text">
+                  <div *ngIf="form.get('descricao')?.invalid && form.get('descricao')?.touched">
+                    <small *ngIf="form.get('descricao')?.hasError('required')" class="text-danger">Descrição é obrigatória.</small>
+                    <small *ngIf="form.get('descricao')?.hasError('minlength')" class="text-danger">Mínimo de 10 caracteres.</small>
+                  </div>
+                </div>
+                <div class="form-group col-md-12 ">
+                  <label class="custom-file-upload" for="imagem">Escolha uma Imagem</label>
+                  <input (change)="onFileSelected($event)"
+                         accept="image/*"
+                         class="form-control input-lg"
+                         formControlName="imagem"
+                         id="imagem"
+                         style="display: none;"
+                         type="file">
+                  <div *ngIf="form.get('imagem')?.invalid && form.get('imagem')?.touched">
+                    <small class="text-danger">{{ getImageErrorMessage() }}</small>
+                  </div>
+                </div>
+
+                <div *ngIf="imageUrl">
+                  <img [src]="imageUrl"
+                       alt="Pré-visualização da Imagem"
+                       style="max-width: 100%;
+                       height: auto;">
+                </div>
+
+                <div class="col-md-12">
+                  <button class="btn btn-primary btn-pill mb-4"
+                          style="margin-right: 15px"
+                          type="submit">
+                    {{ codigo ? 'Atualizar' : 'Cadastrar' }}
+                  </button>
+
+                  <a [routerLink]="['/perguntas', 'abrir']"
+                     class="btn btn-outline-smoke btn-pill mb-4">
+                    voltar
+                  </a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
