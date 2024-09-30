@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Pergunta } from "../pergunta.interface";
 import { PerguntasService } from "../perguntas.service";
 
@@ -7,13 +7,18 @@ import { PerguntasService } from "../perguntas.service";
   templateUrl: './perguntas-abrir.component.html',
   styleUrl: './perguntas-abrir.component.scss'
 })
-export class PerguntasAbrirComponent {
+export class PerguntasAbrirComponent implements OnInit {
   perguntas: Pergunta[] = [];
 
   perguntasService: PerguntasService;
 
   constructor(perguntasService: PerguntasService) {
     this.perguntasService = perguntasService;
+  }
+
+  async ngOnInit(): Promise<void> {
+    this.perguntas = await this.perguntasService.getPerguntas();
+
   }
 
   deletarPergunta(pergunta: Pergunta) {
@@ -26,7 +31,5 @@ export class PerguntasAbrirComponent {
       });
     }
   }
-
-
 
 }
