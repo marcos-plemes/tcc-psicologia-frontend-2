@@ -6,10 +6,14 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { PerguntasService } from "./componentes/perguntas/perguntas.service";
+import { PerguntasComponent } from './componentes/perguntas/perguntas/perguntas.component';
+import { PerguntasAbrirComponent } from './componentes/perguntas/perguntas-abrir/perguntas-abrir.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PerguntasComponent,
+    PerguntasAbrirComponent
   ],
   imports: [
     BrowserModule,
