@@ -1,6 +1,7 @@
 import { HttpParams } from "@angular/common/http";
 import { environment } from "../../../environment/environment";
 
+
 export abstract class BaseService {
   constructor() {
   }
