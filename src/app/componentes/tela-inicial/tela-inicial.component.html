@@ -1,1 +1,47 @@
-<p>tela-inicial works!</p>
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh">
+  <div class="d-flex flex-column justify-content-between">
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+        <div class="card card-default mb-0">
+
+          <div class="card-header pb-0">
+            <div class="app-brand d-flex justify-content-start" style="align-items: center">
+              <a class="w-auto pl-0" href="/index.html" style="margin-right: 10px">
+                <img src="https://seeklogo.com/images/P/puc-goias-logo-06AD67F0EA-seeklogo.com.png" alt="PUC" width="100%" height="75">
+              </a>
+              <span class="brand-name text-dark">Pontifícia Universidade Católica de Goiás</span>
+            </div>
+          </div>
+
+          <div class="card-body px-5 pb-5 pt-0">
+
+            <h4 class="text-dark mb-6 text-center">Tela Inicial</h4>
+
+            <div style="min-width: 750px">
+              <div class="card-header align-items-end">
+                <a [routerLink]="['/perguntas', 'abrir']"
+                   class="btn btn-primary btn-pill"
+                   data-toggle="modal"
+                   data-target="#modal-stock">
+                  Perguntas
+                </a>
+                <a [routerLink]="['/grupos', 'abrir']"
+                   class="btn btn-info-dark btn-pill"
+                   data-toggle="modal"
+                   data-target="#modal-stock">
+                  Grupos
+                </a>
+                <a [routerLink]="['/configuracao']"
+                   class="btn btn-smoke btn-pill"
+                   data-toggle="modal"
+                   data-target="#modal-stock">
+                  Configuração
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

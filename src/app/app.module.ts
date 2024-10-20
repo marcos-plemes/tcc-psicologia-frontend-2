@@ -10,6 +10,7 @@ import { PerguntasComponent } from './componentes/perguntas/perguntas/perguntas.
 import { PerguntasAbrirComponent } from './componentes/perguntas/perguntas-abrir/perguntas-abrir.component';
 import { GruposAbrirComponent } from './componentes/grupos/grupos-abrir/grupos-abrir.component';
 import { TelaInicialComponent } from './componentes/tela-inicial/tela-inicial.component';
+import { ConfiguracaoComponent } from './componentes/configuracao/configuracao.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { TelaInicialComponent } from './componentes/tela-inicial/tela-inicial.co
     PerguntasComponent,
     PerguntasAbrirComponent,
     GruposAbrirComponent,
-    TelaInicialComponent
+    TelaInicialComponent,
+    ConfiguracaoComponent
   ],
   imports: [
     BrowserModule,
