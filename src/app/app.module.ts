@@ -8,12 +8,16 @@ import { HttpClientModule } from "@angular/common/http";
 import { PerguntasService } from "./componentes/perguntas/perguntas.service";
 import { PerguntasComponent } from './componentes/perguntas/perguntas/perguntas.component';
 import { PerguntasAbrirComponent } from './componentes/perguntas/perguntas-abrir/perguntas-abrir.component';
+import { GruposAbrirComponent } from './componentes/grupos/grupos-abrir/grupos-abrir.component';
+import { TelaInicialComponent } from './componentes/tela-inicial/tela-inicial.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PerguntasComponent,
-    PerguntasAbrirComponent
+    PerguntasAbrirComponent,
+    GruposAbrirComponent,
+    TelaInicialComponent
   ],
   imports: [
     BrowserModule,
