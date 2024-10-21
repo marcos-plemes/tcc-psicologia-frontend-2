@@ -29,7 +29,6 @@ export class PerguntasService extends BaseService {
 
   alterarPergunta(pergunta: any): Observable<any> {
     return this.http.put(`${this.getUrbase()}/perguntas`, pergunta);
-
   }
 
 }

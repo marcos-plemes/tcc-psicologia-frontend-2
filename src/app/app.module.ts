@@ -11,6 +11,8 @@ import { PerguntasAbrirComponent } from './componentes/perguntas/perguntas-abrir
 import { GruposAbrirComponent } from './componentes/grupos/grupos-abrir/grupos-abrir.component';
 import { TelaInicialComponent } from './componentes/tela-inicial/tela-inicial.component';
 import { ConfiguracaoComponent } from './componentes/configuracao/configuracao.component';
+import { GruposService } from "./componentes/grupos/grupos.service";
+import { GruposComponent } from './componentes/grupos/grupos/grupos.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { ConfiguracaoComponent } from './componentes/configuracao/configuracao.c
     PerguntasAbrirComponent,
     GruposAbrirComponent,
     TelaInicialComponent,
-    ConfiguracaoComponent
+    ConfiguracaoComponent,
+    GruposComponent
   ],
   imports: [
     BrowserModule,
@@ -28,8 +31,10 @@ import { ConfiguracaoComponent } from './componentes/configuracao/configuracao.c
     HttpClientModule
   ],
   providers: [
-    PerguntasService
+    PerguntasService,
+    GruposService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

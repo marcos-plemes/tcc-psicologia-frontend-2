@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PerguntasService } from "../perguntas.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from "@angular/router";
   templateUrl: './perguntas.component.html',
   styleUrl: './perguntas.component.scss'
 })
-export class PerguntasComponent {
+export class PerguntasComponent implements OnInit {
   loading: boolean = true;
 
   codigo: number | null = null;
