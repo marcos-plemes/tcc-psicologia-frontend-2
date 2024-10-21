@@ -43,12 +43,17 @@
                 </tbody>
 
               </table>
-              <div class="card-header align-items-end">
+              <div class="card-header align-items-start justify-content-start">
                 <a [routerLink]="['/perguntas', 'novo']"
-                   class="btn btn-primary btn-pill"
+                   class="btn btn-primary btn-pill mr-3"
                    data-toggle="modal"
                    data-target="#modal-stock">
                   Cadastrar Nova Pergunta
+                </a>
+
+                <a [routerLink]="['', ]"
+                   class="btn btn-outline-smoke btn-pill mb-4">
+                  voltar
                 </a>
               </div>
             </div>
