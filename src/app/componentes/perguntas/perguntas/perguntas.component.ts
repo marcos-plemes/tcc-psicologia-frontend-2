@@ -30,7 +30,7 @@ export class PerguntasComponent implements OnInit {
     this.perguntasService = perguntasService;
     this.form = fromBuilder.group({
       codigo: [],
-      descricao: ['', [Validators.required, Validators.minLength(10)]],
+      descricao: ['', [Validators.required, Validators.minLength(3)]],
       imagem: ['', [Validators.required]]
     });
   }

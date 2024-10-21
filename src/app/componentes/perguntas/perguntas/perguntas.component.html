@@ -34,7 +34,7 @@
                          type="text">
                   <div *ngIf="form.get('descricao')?.invalid && form.get('descricao')?.touched">
                     <small *ngIf="form.get('descricao')?.hasError('required')" class="text-danger">Descrição é obrigatória.</small>
-                    <small *ngIf="form.get('descricao')?.hasError('minlength')" class="text-danger">Mínimo de 10 caracteres.</small>
+                    <small *ngIf="form.get('descricao')?.hasError('minlength')" class="text-danger">Mínimo de 3 caracteres.</small>
                   </div>
                 </div>
                 <div class="form-group col-md-12 ">
