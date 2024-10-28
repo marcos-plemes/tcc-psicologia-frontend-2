@@ -26,7 +26,8 @@
             <form (submit)="onSubmit($event)"
                   [formGroup]="form">
               <div class="row">
-                <div class="form-group col-md-12 mb-4">
+                <div class="form-group col-md-6 mb-4">
+                  <label for="nome">Nome</label>
                   <input class="form-control input-lg"
                          formControlName="nome"
                          id="nome"
@@ -35,6 +36,18 @@
                   <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">
                     <small *ngIf="form.get('nome')?.hasError('required')" class="text-danger">Descrição é obrigatória.</small>
                     <small *ngIf="form.get('nome')?.hasError('minlength')" class="text-danger">Mínimo de 10 caracteres.</small>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 mb-4">
+                  <label for="quantidadeDePalavras">Quantidade de Palavra</label>
+                  <input class="form-control input-lg"
+                         formControlName="quantidadeDePalavras"
+                         id="quantidadeDePalavras"
+                         placeholder="Quantidade de Palavras"
+                         type="text">
+                  <div *ngIf="form.get('quantidadeDePalavras')?.invalid && form.get('quantidadeDePalavras')?.touched">
+                    <small *ngIf="form.get('nome')?.hasError('quantidadeDePalavras')" class="text-danger">Quantidade De Palavras é obrigatória.</small>
                   </div>
                 </div>
 
@@ -58,6 +71,94 @@
                   </div>
                 </div>
 
+                <div class="form-check">
+                  <div class="custom-control custom-checkbox mr-3 mb-3 col-md-12">
+                    <input type="checkbox"
+                           formControlName="isMostrarImagemCorrespondenteAPalavra"
+                           class="custom-control-input"
+                           id="isMostrarImagemCorrespondenteAPalavra">
+                    <label class="custom-control-label" for="isMostrarImagemCorrespondenteAPalavra">
+                      Mostrar Imagem Correspondente a Palavra
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-12 text-right">
+                  <button class="btn btn-primary btn-pill mb-4"
+                          style="margin-right: 15px"
+                          type="button"
+                          (click)="gerarOrdemDasPalavras()">
+                    GERAR ORDEM
+                  </button>
+                </div>
+
+                <div style="width: 100%;" *ngIf="ordens.length !== 0">
+                  <table class="table table-product" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Palavra</th>
+                        <th class="text-center">Quantidade</th>
+                        <th class="text-center">Tempo</th>
+                        <th class="text-center">Intervalo</th>
+                        <th class="text-center">Quantidade da Imagem</th>
+                        <th class="text-center">Tempo da Imagem</th>
+                        <th class="text-center">Intervalo da Imagem</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let ordem of ordens">
+                        <td class="text-center">
+                          {{ ordem.descricao }}
+                        </td>
+                        <td class="text-center">
+                          <input class="form-control"
+                                 type="number"
+                                 [value]="ordem.quantidadeDaPalavra"
+                          />
+                        </td>
+                        <td class="text-center">
+                          <input class="form-control"
+                                 type="number"
+                                 [value]="ordem.tempoDaPalavra"
+                          />
+                        </td>
+                        <td class="text-center">
+                          <input class="form-control"
+                                 type="number"
+                                 [value]="ordem.intervaloDeTempoDaPalavra"
+                          />
+                        </td>
+                        <td class="text-center">
+                          <input class="form-control"
+                                 type="number"
+                                 [value]="ordem.quantidadeDaImagem"
+                          />
+                        </td>
+                        <td class="text-center">
+                          <input class="form-control"
+                                 type="number"
+                                 [value]="ordem.intervaloDeTempoDaImagem"
+                          />
+                        </td>
+                        <td class="text-center">
+                          <input class="form-control"
+                                 type="number"
+                                 [value]="ordem.tempoDaImagem"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="col-md-12">
+                    <button class="btn btn-primary btn-pill mb-4"
+                            style="margin-right: 15px"
+                            (click)="salvarOrdem()"
+                            type="button">
+                      SALVAR ORDEM
+                    </button>
+                  </div>
+                </div>
+
                 <div class="col-md-12">
                   <button class="btn btn-primary btn-pill mb-4"
                           style="margin-right: 15px"
@@ -70,6 +171,7 @@
                     voltar
                   </a>
                 </div>
+
               </div>
             </form>
           </div>

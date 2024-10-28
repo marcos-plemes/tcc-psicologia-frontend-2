@@ -15,7 +15,7 @@
 
           <div class="card-body px-5 pb-5 pt-0">
 
-            <h4 class="text-dark mb-6 text-center">Perguntas</h4>
+            <h4 class="text-dark mb-6 text-center">Palavras</h4>
 
             <div style="min-width: 750px">
               <table class="table table-product" style="width:100%">
@@ -29,7 +29,7 @@
                 <tbody>
                   <tr *ngFor="let pergunta of perguntas">
                     <td class="text-primary">
-                      <a [routerLink]="['/perguntas', pergunta.codigo]">
+                      <a [routerLink]="['/palavras', pergunta.codigo]">
                         {{ pergunta.codigo }}
                       </a>
                     </td>
@@ -44,7 +44,7 @@
 
               </table>
               <div class="card-header align-items-start justify-content-start">
-                <a [routerLink]="['/perguntas', 'novo']"
+                <a [routerLink]="['/palavras', 'novo']"
                    class="btn btn-primary btn-pill mr-3"
                    data-toggle="modal"
                    data-target="#modal-stock">

@@ -9,8 +9,8 @@ import { GruposComponent } from "./componentes/grupos/grupos/grupos.component";
 import { IniciarComponent } from "./componentes/iniciar/iniciar.component";
 
 const routes: Routes = [
-  { path: 'perguntas/abrir', component: PerguntasAbrirComponent },
-  { path: 'perguntas/:codigo', component: PerguntasComponent },
+  { path: 'palavras/abrir', component: PerguntasAbrirComponent },
+  { path: 'palavras/:codigo', component: PerguntasComponent },
   { path: 'grupos/abrir', component: GruposAbrirComponent },
   { path: 'grupos/:codigo', component: GruposComponent },
   { path: 'iniciar/:codigo', component: IniciarComponent },

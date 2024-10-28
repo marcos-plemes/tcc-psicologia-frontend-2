@@ -3,7 +3,11 @@ export interface Grupo {
 
   nome?: string,
 
+  quantidadeDePalavras?: number,
+
   isMostrarImagem?: boolean,
 
-  isMostrarImagemPrimeiro?: boolean
+  isMostrarImagemPrimeiro?: boolean,
+
+  isMostrarImagemCorrespondenteAPalavra?: boolean
 }
