@@ -18,8 +18,8 @@ export class GruposComponent implements OnInit {
   codigo: number | null = null;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
     fromBuilder: FormBuilder,
     gruposService: GruposService) {
 
@@ -27,7 +27,8 @@ export class GruposComponent implements OnInit {
     this.form = fromBuilder.group({
       codigo: [],
       nome: ['', [Validators.required]],
-      isMostrarImagem: [true, [Validators.required]]
+      isMostrarImagem: [true, [Validators.required]],
+      isMostrarImagemPrimeiro: [false, [Validators.required]]
     });
   }
 
@@ -40,7 +41,8 @@ export class GruposComponent implements OnInit {
       if (grupo) {
         this.form.patchValue({
           nome: grupo.nome,
-          isMostrarImagem: grupo.isMostrarImagem
+          isMostrarImagem: grupo.isMostrarImagem,
+          isMostrarImagemPrimeiro: grupo.isMostrarImagemPrimeiro
         });
       }
     }
@@ -53,6 +55,7 @@ export class GruposComponent implements OnInit {
       const formData = new FormData();
       formData.append('nome', this.form.get('nome')?.value);
       formData.append('isMostrarImagem', this.form.get('isMostrarImagem')?.value);
+      formData.append('isMostrarImagemPrimeiro', this.form.get('isMostrarImagemPrimeiro')?.value);
       if (this.codigo) {
         formData.append('codigo', this.codigo.toString());
         this.gruposService.alterarGrupo(formData).subscribe(response => {

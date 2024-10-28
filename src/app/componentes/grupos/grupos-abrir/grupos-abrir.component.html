@@ -23,6 +23,7 @@
                   <tr>
                     <th style="width: 15px">Código</th>
                     <th class="text-center px-3">Nome</th>
+                    <th class="text-center px-3">Iniciar</th>
                     <th class="text-center" style="width: 50px">Deletar</th>
                   </tr>
                 </thead>
@@ -34,6 +35,11 @@
                       </a>
                     </td>
                     <td class="text-left px-3">{{ grupo.nome }}</td>
+                    <td class="text-center">
+                      <i class="bi bi-play-circle-fill"
+                         [routerLink]="['/iniciar', grupo.codigo]"
+                         style="cursor: pointer; color: #3ea1ec"></i>
+                    </td>
                     <td class="text-center">
                       <i class="bi bi-trash"
                          (click)="deletarGrupo(grupo)"

@@ -4,4 +4,6 @@ export interface Grupo {
   nome?: string,
 
   isMostrarImagem?: boolean,
+
+  isMostrarImagemPrimeiro?: boolean
 }

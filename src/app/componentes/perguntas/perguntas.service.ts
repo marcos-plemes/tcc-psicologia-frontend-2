@@ -19,6 +19,10 @@ export class PerguntasService extends BaseService {
     return this.http.get(`${this.getUrbase()}/perguntas`).toPromise() as Promise<Array<Pergunta>>;
   };
 
+  getPerguntasComImagem(): Promise<Array<Pergunta>> {
+    return this.http.get(`${this.getUrbase()}/perguntas-com-imagem`).toPromise() as Promise<Array<Pergunta>>;
+  };
+
   cadastrarPergunta(pergunta: any): Observable<any> {
     return this.http.post(`${this.getUrbase()}/perguntas`, pergunta);
   }

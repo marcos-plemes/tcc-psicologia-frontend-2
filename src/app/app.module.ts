@@ -13,6 +13,8 @@ import { TelaInicialComponent } from './componentes/tela-inicial/tela-inicial.co
 import { ConfiguracaoComponent } from './componentes/configuracao/configuracao.component';
 import { GruposService } from "./componentes/grupos/grupos.service";
 import { GruposComponent } from './componentes/grupos/grupos/grupos.component';
+import { IniciarComponent } from './componentes/iniciar/iniciar.component';
+import { CarregarInformacoesComponent } from './componentes/iniciar/carregar-informacoes/carregar-informacoes.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { GruposComponent } from './componentes/grupos/grupos/grupos.component';
     GruposAbrirComponent,
     TelaInicialComponent,
     ConfiguracaoComponent,
-    GruposComponent
+    GruposComponent,
+    IniciarComponent,
+    CarregarInformacoesComponent
   ],
   imports: [
     BrowserModule,
