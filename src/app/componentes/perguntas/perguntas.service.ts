@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 @Injectable()
 export class PerguntasService extends BaseService {
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
     super();
   }
 

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { GruposService } from "../grupos.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Ordem } from "../Ordem.interface";
+import { OrdemDasPalavrasService } from "../../ordem-das-palavras/ordem-das-palavras.service";
+import { OrdemDaPalavra } from "../../ordem-das-palavras/OrdemDaPalavra";
 
 @Component({
   selector: 'app-grupos',
@@ -18,11 +19,12 @@ export class GruposComponent implements OnInit {
 
   codigo: number | null = null;
 
-  ordens: Ordem[] = [];
+  ordensDasPalavras: OrdemDaPalavra[] = [];
 
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
+    private readonly ordemDasPalavrasService: OrdemDasPalavrasService,
     fromBuilder: FormBuilder,
     gruposService: GruposService) {
 
@@ -30,15 +32,16 @@ export class GruposComponent implements OnInit {
     this.form = fromBuilder.group({
       codigo: [],
       nome: ['', [Validators.required]],
-      quantidadeDePalavras: [10, [Validators.required]],
       isMostrarImagem: [true, [Validators.required]],
       isMostrarImagemPrimeiro: [false, [Validators.required]],
-      isMostrarImagemCorrespondenteAPalavra: [false, [Validators.required]]
+      ordemDaPalavra: [null, [Validators.required]]
     });
   }
 
   async ngOnInit() {
     const codigo = this.route.snapshot.paramMap.get('codigo');
+
+    this.ordensDasPalavras = await this.ordemDasPalavrasService.getOrdemDasPalavras();
 
     if (codigo && !isNaN(Number(codigo))) {
       this.codigo = Number(codigo);
@@ -46,10 +49,9 @@ export class GruposComponent implements OnInit {
       if (grupo) {
         this.form.patchValue({
           nome: grupo.nome,
-          quantidadeDePalavras: grupo.quantidadeDePalavras,
           isMostrarImagem: grupo.isMostrarImagem,
           isMostrarImagemPrimeiro: grupo.isMostrarImagemPrimeiro,
-          isMostrarImagemCorrespondenteAPalavra: grupo.isMostrarImagemCorrespondenteAPalavra
+          ordemDaPalavra: grupo.ordemDaPalavra
         });
       }
     }
@@ -61,10 +63,10 @@ export class GruposComponent implements OnInit {
     if (this.form.valid) {
       const formData = new FormData();
       formData.append('nome', this.form.get('nome')?.value);
-      formData.append('quantidadeDePalavras', this.form.get('quantidadeDePalavras')?.value);
       formData.append('isMostrarImagem', this.form.get('isMostrarImagem')?.value);
       formData.append('isMostrarImagemPrimeiro', this.form.get('isMostrarImagemPrimeiro')?.value);
-      formData.append('isMostrarImagemCorrespondenteAPalavra', this.form.get('isMostrarImagemCorrespondenteAPalavra')?.value);
+      formData.append('ordemDaPalavra', this.form.get('ordemDaPalavra')?.value);
+
       if (this.codigo) {
         formData.append('codigo', this.codigo.toString());
         this.gruposService.alterarGrupo(formData).subscribe(response => {
@@ -84,20 +86,6 @@ export class GruposComponent implements OnInit {
 
     } else {
       alert('Formulário inválido');
-    }
-  }
-
-  async gerarOrdemDasPalavras(): Promise<void> {
-    this.ordens = await this.gruposService.gerarOrdem(this.form.get('quantidadeDePalavras')?.value || 10);
-  }
-
-  salvarOrdem() {
-    if (this.ordens && this.codigo) {
-      this.gruposService.cadastrarOrdem(this.ordens, Number(this.codigo)).subscribe(response => {
-        alert('Ordem salva com sucesso');
-      }, error => {
-        alert('Erro ao salvar ordem');
-      });
     }
   }
 

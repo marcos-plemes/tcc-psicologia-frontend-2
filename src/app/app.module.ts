@@ -15,6 +15,9 @@ import { GruposService } from "./componentes/grupos/grupos.service";
 import { GruposComponent } from './componentes/grupos/grupos/grupos.component';
 import { IniciarComponent } from './componentes/iniciar/iniciar.component';
 import { CarregarInformacoesComponent } from './componentes/iniciar/carregar-informacoes/carregar-informacoes.component';
+import { OrdemDasPalavrasAbrirComponent } from './componentes/ordem-das-palavras/ordem-das-palavras-abrir/ordem-das-palavras-abrir.component';
+import { OrdemDaPalavraComponent } from './componentes/ordem-das-palavras/ordem-da-palavra/ordem-da-palavra.component';
+import { OrdemDaPalavraItensComponent } from './componentes/ordem-das-palavras/ordem-da-palavra/ordem-da-palavra-itens/ordem-da-palavra-itens.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { CarregarInformacoesComponent } from './componentes/iniciar/carregar-inf
     ConfiguracaoComponent,
     GruposComponent,
     IniciarComponent,
-    CarregarInformacoesComponent
+    CarregarInformacoesComponent,
+    OrdemDasPalavrasAbrirComponent,
+    OrdemDaPalavraComponent,
+    OrdemDaPalavraItensComponent
   ],
   imports: [
     BrowserModule,

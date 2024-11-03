@@ -1,6 +1,6 @@
 <div class="card-body px-5 pb-5 pt-0">
 
-  <h4 class="text-dark mb-6 text-center">Palavras</h4>
+  <h4 class="text-dark mb-6 text-center">Ordem Das Palavras</h4>
 
   <div style="min-width: 750px">
     <table class="table table-product" style="width:100%">
@@ -12,16 +12,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let pergunta of perguntas">
+        <tr *ngFor="let ordemDaPalavra of ordemDaPalavras">
           <td class="text-primary">
-            <a [routerLink]="['/palavras', pergunta.codigo]">
-              {{ pergunta.codigo }}
+            <a [routerLink]="['/ordem-das-palavras', ordemDaPalavra.codigo]">
+              {{ ordemDaPalavra.codigo }}
             </a>
           </td>
-          <td class="text-left px-3">{{ pergunta.descricao }}</td>
+          <td class="text-center px-3">{{ ordemDaPalavra.descricao }}</td>
           <td class="text-center">
             <i class="bi bi-trash"
-               (click)="deletarPergunta(pergunta)"
+               (click)="deletarOrdem(ordemDaPalavra)"
                style="cursor: pointer; color: red;"></i>
           </td>
         </tr>
@@ -29,11 +29,11 @@
 
     </table>
     <div class="card-header align-items-start justify-content-start">
-      <a [routerLink]="['/palavras', 'novo']"
+      <a [routerLink]="['/ordem-das-palavras', 'novo']"
          class="btn btn-primary btn-pill mr-3"
          data-toggle="modal"
          data-target="#modal-stock">
-        Cadastrar Nova Pergunta
+        Cadastrar Nova Ordem
       </a>
 
       <a [routerLink]="['', ]"
@@ -41,5 +41,6 @@
         voltar
       </a>
     </div>
+
   </div>
 </div>

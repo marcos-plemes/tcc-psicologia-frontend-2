@@ -1,0 +1,121 @@
+<div *ngIf="loading">
+  CARREGANDO
+</div>
+
+<div *ngIf="!loading">
+  <div class="card-body px-5 pb-5 pt-0">
+
+    <h4 class="text-dark mb-6 text-center">Ordem das Palavras</h4>
+
+    <form (submit)="onSubmit($event)"
+          [formGroup]="form">
+      <div class="row">
+        <div style="width: 100%;" *ngIf="itens.length !== 0">
+          <table class="table table-product" style="width:100%">
+            <thead>
+              <tr>
+                <th class="text-center" style="width: 10px;">ordem</th>
+                <th class="text-center">Palavra</th>
+                <th class="text-center" style="width: 10px">Quantidade</th>
+                <th class="text-center" style="width: 120px">
+                  Tempo
+                  <span style="font-size: 10px">ms</span>
+                </th>
+                <th class="text-center" style="width: 130px">
+                  Intervalo
+                  <span style="font-size: 10px">ms</span>
+                </th>
+                <th class="text-center">Imagem</th>
+                <th class="text-center" style="width: 120px">Quantidade da Imagem</th>
+                <th class="text-center" style="width: 120px">
+                  Tempo da Imagem
+                  <span style="font-size: 10px">ms</span>
+                </th>
+                <th class="text-center" style="width: 130px">
+                  Intervalo da Imagem
+                  <span style="font-size: 10px">ms</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody formArrayName="itens">
+              <tr *ngFor="let item of itens; let index = index" [formGroupName]="index">
+                <td class="text-center">
+                  {{ item.ordem }}
+                </td>
+
+                <td class="text-center">
+                  <select class="form-control"
+                          formControlName="codigoDaPalavraTexto">
+                    <option *ngFor="let palavra of palavras" [value]="palavra.codigo">
+                      {{ palavra.descricao }}
+                    </option>
+                  </select>
+                </td>
+                <td class="text-center">
+                  <input class="form-control"
+                         type="number"
+                         formControlName="quantidadeDaPalavraTexto"
+                  />
+                </td>
+                <td class="text-center">
+                  <input class="form-control"
+                         type="number"
+                         formControlName="tempoDaPalavraTexto"
+                  />
+                </td>
+                <td class="text-center">
+                  <input class="form-control"
+                         type="number"
+                         formControlName="intervaloDaPalavraTexto"
+                  />
+                </td>
+
+                <td class="text-center">
+                  <select class="form-control"
+                          formControlName="codigoDaPalavraImagem">
+                    <option *ngFor="let palavra of palavras" [value]="palavra.codigo">
+                      {{ palavra.descricao }}
+                    </option>
+                  </select>
+                </td>
+
+                <td class="text-center">
+                  <input class="form-control"
+                         type="number"
+                         formControlName="quantidadeDaPalavraImagem"
+                  />
+                </td>
+                <td class="text-center">
+                  <input class="form-control"
+                         type="number"
+                         formControlName="tempoDaPalavraImagem"
+                  />
+                </td>
+                <td class="text-center">
+                  <input class="form-control"
+                         type="number"
+                         formControlName="intervaloDaPalavraImagem"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-md-12">
+          <button class="btn btn-primary btn-pill mb-4"
+                  style="margin-right: 15px"
+                  type="submit">
+            Atualizar
+          </button>
+
+          <a [routerLink]="['/ordem-das-palavras', codigo]"
+             class="btn btn-outline-smoke btn-pill mb-4">
+            voltar
+          </a>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
