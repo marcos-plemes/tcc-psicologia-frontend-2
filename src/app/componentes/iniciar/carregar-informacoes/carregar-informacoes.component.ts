@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Pergunta } from "../../perguntas/pergunta.interface";
+import { OrdemDaPalavraItem } from "../../ordem-das-palavras/OrdemDaPalavraItem.interface";
 
 @Component({
   selector: 'app-carregar-informacoes',
@@ -10,7 +10,7 @@ export class CarregarInformacoesComponent {
 
   @Input() iniciarPesquisa = false;
 
-  @Input() perguntas: Pergunta[] = [];
+  @Input() itens: OrdemDaPalavraItem[] = [];
 
   @Output() iniciarPesquisaChange = new EventEmitter<boolean>();
 

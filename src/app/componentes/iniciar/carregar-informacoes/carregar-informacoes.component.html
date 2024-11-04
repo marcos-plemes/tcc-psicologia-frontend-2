@@ -1,5 +1,5 @@
 <div *ngIf="!iniciarPesquisa">
-  <div *ngIf="perguntas.length === 0">
+  <div *ngIf="itens.length === 0">
     <span>{{ 'Carregando informações, espere a liberação para o participante.' }}</span>
     <div class="col-md-12 mt-6 text-center">
       <a [routerLink]="['/grupos', 'abrir']"
@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <div *ngIf="perguntas.length !== 0">
+  <div *ngIf="itens.length !== 0">
     <span>Todas as instruções estão na tela</span>
     <div class="col-md-12 mt-6 text-center">
       <button class="btn btn-primary btn-pill mb-4"

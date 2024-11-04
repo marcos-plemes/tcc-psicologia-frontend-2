@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { PerguntasService } from "../perguntas/perguntas.service";
-import { Pergunta } from "../perguntas/pergunta.interface";
+import { ActivatedRoute, Router } from "@angular/router";
 import { GruposService } from "../grupos/grupos.service";
 import { Grupo } from "../grupos/grupo.interface";
 import Keyboard from 'simple-keyboard';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { OrdemDasPalavrasService } from "../ordem-das-palavras/ordem-das-palavras.service";
+import { OrdemDaPalavraItem } from "../ordem-das-palavras/OrdemDaPalavraItem.interface";
+import { RespostasService } from "../respostas/respostas.service";
 
 @Component({
   selector: 'app-iniciar',
@@ -16,15 +17,13 @@ export class IniciarComponent implements OnInit {
 
   form: FormGroup;
 
-  value = "";
-
   keyboard: Keyboard | null = null;
 
   grupo: Grupo | null = null;
 
   iniciarPesquisa = false;
 
-  perguntas: Pergunta[] = [];
+  itens: OrdemDaPalavraItem[] = [];
 
   codigo: number | null = null;
 
@@ -38,8 +37,10 @@ export class IniciarComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly grupoService: GruposService,
-    private readonly perguntasService: PerguntasService,
+    private readonly respostasService: RespostasService,
+    private readonly ordemDasPalavras: OrdemDasPalavrasService,
     private readonly formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
       respostas: this.formBuilder.array([])
@@ -52,11 +53,10 @@ export class IniciarComponent implements OnInit {
       this.codigo = Number(codigo);
       this.grupoService.getGrupo(this.codigo).then(grupo => {
         this.grupo = grupo;
-        // this.perguntasService.getPerguntasComImagem().then(response => {
-        this.perguntasService.getPerguntasComImagem().then(response => {
-          this.perguntas = response;
+        this.ordemDasPalavras.itensComImagem(this.grupo.ordemDaPalavra as number).then(response => {
+          this.itens = response;
           this.form.setControl('respostas', this.formBuilder.array(
-            this.perguntas.map(() => this.formBuilder.control('', Validators.required))
+            this.itens.map((item) => this.criarItemForm(item))
           ));
         });
       });
@@ -85,36 +85,75 @@ export class IniciarComponent implements OnInit {
         '{shift}': '⇧',
         '{space}': 'Espaço'
       },
-      onchange: input => this.keyboardOnChange(input as unknown as string),
+      onChange: input => this.keyboardOnChange(input as unknown as string),
       onKeyPress: button => this.keyboardButtonPress(button)
     });
 
   }
 
+  criarItemForm(item: OrdemDaPalavraItem) {
+    return this.formBuilder.group({
+      resposta: ['', [Validators.required]],
+      inicio: ['', [Validators.required]],
+      fim: ['', [Validators.required]]
+    });
+
+  }
+
   keyboardOnChange(input: string): void {
-    this.value = input;
-    console.log("JJOJ");
+    (this.form.get('respostas') as FormArray)?.at(this.indexAtual)?.get('resposta')?.setValue(input);
   };
 
   keyboardButtonPress(button: string): void {
-    this.value = button;
+    if (button === "{shift}" || button === "{lock}") {
+      this.handleShift();
+    }
   }
 
-  onInputChange = (event: any) => {
-    console.log('teste');
+  handleShift(): void {
     if (this.keyboard) {
-      this.keyboard.setInput(event.target.value);
+      let currentLayout = this.keyboard.options.layoutName;
+      let shiftToggle = currentLayout === "default" ? "shift" : "default";
+
+      this.keyboard.setOptions({
+        layoutName: shiftToggle
+      });
+
     }
-  };
+
+  }
 
   salvar() {
-    if (!this.form.valid) {
-      alert('Por favor, preencha todos os campos obrigatórios.');
+    this.responder();
+    if (this.form.valid) {
+      this.respostasService.cadastrar(this.codigo as number, this.form.value.respostas).subscribe(() => {
+        this.router.navigate(['/finalizar']);
+        
+      }, error => {
+        alert('Erro ao finalizar');
+      });
     }
   }
 
   atualizarInicializarPesquisa(iniciarPesquisa: boolean): void {
     this.iniciarPesquisa = iniciarPesquisa;
+    this.contagemRegresiva(3);
+  }
+
+  contagemRegresiva(contagem: number): void {
+    this.palavraAtual = contagem.toString();
+    if (contagem === 0) {
+      this.palavraAtual = '';
+      this.inicializarPesquisa();
+    } else {
+      setTimeout(() => {
+        this.contagemRegresiva(contagem - 1);
+      }, 1000);
+    }
+
+  }
+
+  inicializarPesquisa() {
     if (this.grupo?.isMostrarImagemPrimeiro) {
       this.montarProximaImagem();
 
@@ -124,40 +163,42 @@ export class IniciarComponent implements OnInit {
   }
 
   montarProximaPalavra(): void {
-    if (this.indexAtual >= this.perguntas.length) {
+    if (this.indexAtual >= this.itens.length) {
       this.indexAtual = 0;
       if (!this.grupo?.isMostrarImagemPrimeiro) {
         this.montarProximaImagem();
+
       } else {
-        this.respostaLiberada = true;
+        this.liberarRespostas();
       }
       return;
     }
 
-    this.palavraAtual = this.perguntas[this.indexAtual].descricao as string;
+    this.palavraAtual = this.itens[this.indexAtual].descricao as string;
 
     setTimeout(() => {
       this.palavraAtual = '';
       setTimeout(() => {
         this.indexAtual++;
         this.montarProximaPalavra();
-      }, 1000);
-    }, 2000);
+      }, this.itens[this.indexAtual].intervaloDaPalavraTexto);
+    }, this.itens[this.indexAtual].tempoDaPalavraTexto);
   }
 
   montarProximaImagem(): void {
-    if (this.indexAtual >= this.perguntas.length) {
+    if (this.indexAtual >= this.itens.length) {
       this.indexAtual = 0;
       if (this.grupo?.isMostrarImagemPrimeiro) {
         this.montarProximaPalavra();
+
       } else {
-        this.respostaLiberada = true;
+        this.liberarRespostas();
       }
       return;
     }
 
     if (this.grupo?.isMostrarImagem) {
-      this.imageUrl = this.perguntas[this.indexAtual].imagem as string;
+      this.imageUrl = this.itens[this.indexAtual].imagem as string;
     }
 
     setTimeout(() => {
@@ -165,8 +206,28 @@ export class IniciarComponent implements OnInit {
       setTimeout(() => {
         this.indexAtual++;
         this.montarProximaImagem();
-      }, 1000);
-    }, 2000);
+      }, this.itens[this.indexAtual].intervaloDaPalavraImagem);
+    }, this.itens[this.indexAtual].tempoDaPalavraImagem);
+  }
+
+  liberarRespostas() {
+    this.respostaLiberada = true;
+    this.respostas.at(this.indexAtual)?.get('resposta');
+    (this.form.get('respostas') as FormArray)?.at(this.indexAtual)?.get('inicio')?.setValue(new Date());
+  }
+
+  responder(): void {
+    this.respostas.at(this.indexAtual)?.get('resposta')?.markAsTouched();
+    if (this.respostas.at(this.indexAtual)?.get('resposta')?.valid) {
+      this.respostas.at(this.indexAtual)?.get('fim')?.setValue(new Date());
+      this.indexAtual++;
+      this.respostas.at(this.indexAtual)?.get('inicio')?.setValue(new Date());
+      this.keyboard?.clearInput();
+    }
+  }
+
+  get respostas(): FormArray {
+    return this.form.get('respostas') as FormArray;
   }
 
 }

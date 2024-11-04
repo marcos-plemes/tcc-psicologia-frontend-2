@@ -18,6 +18,7 @@ import { CarregarInformacoesComponent } from './componentes/iniciar/carregar-inf
 import { OrdemDasPalavrasAbrirComponent } from './componentes/ordem-das-palavras/ordem-das-palavras-abrir/ordem-das-palavras-abrir.component';
 import { OrdemDaPalavraComponent } from './componentes/ordem-das-palavras/ordem-da-palavra/ordem-da-palavra.component';
 import { OrdemDaPalavraItensComponent } from './componentes/ordem-das-palavras/ordem-da-palavra/ordem-da-palavra-itens/ordem-da-palavra-itens.component';
+import { FinalizarComponent } from './componentes/finalizar/finalizar.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { OrdemDaPalavraItensComponent } from './componentes/ordem-das-palavras/o
     CarregarInformacoesComponent,
     OrdemDasPalavrasAbrirComponent,
     OrdemDaPalavraComponent,
-    OrdemDaPalavraItensComponent
+    OrdemDaPalavraItensComponent,
+    FinalizarComponent
   ],
   imports: [
     BrowserModule,

@@ -39,7 +39,11 @@ export class OrdemDasPalavrasService extends BaseService {
   }
 
   atualizarItens(itens: OrdemDaPalavraItem[]): Observable<any> {
-    return this.http.put(`${this.getUrbase()}/ordem-das-palavras/7/itens`, itens);
+    return this.http.put(`${this.getUrbase()}/ordem-das-palavras/itens`, itens);
+  }
+
+  itensComImagem(codigo: number): Promise<OrdemDaPalavraItem[]> {
+    return this.http.get(`${this.getUrbase()}/ordem-das-palavras/${codigo}/itens-com-imagem`).toPromise() as Promise<OrdemDaPalavraItem[]>;
   }
 
 }

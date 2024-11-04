@@ -21,4 +21,8 @@ export interface OrdemDaPalavraItem {
 
   intervaloDaPalavraImagem?: number,
 
+  imagem?: File | string,
+
+  descricao?: string
+
 }

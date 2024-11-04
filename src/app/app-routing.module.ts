@@ -10,6 +10,7 @@ import { IniciarComponent } from "./componentes/iniciar/iniciar.component";
 import { OrdemDasPalavrasAbrirComponent } from "./componentes/ordem-das-palavras/ordem-das-palavras-abrir/ordem-das-palavras-abrir.component";
 import { OrdemDaPalavraComponent } from "./componentes/ordem-das-palavras/ordem-da-palavra/ordem-da-palavra.component";
 import { OrdemDaPalavraItensComponent } from "./componentes/ordem-das-palavras/ordem-da-palavra/ordem-da-palavra-itens/ordem-da-palavra-itens.component";
+import { FinalizarComponent } from "./componentes/finalizar/finalizar.component";
 
 const routes: Routes = [
   { path: 'palavras/abrir', component: PerguntasAbrirComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'grupos/abrir', component: GruposAbrirComponent },
   { path: 'grupos/:codigo', component: GruposComponent },
   { path: 'iniciar/:codigo', component: IniciarComponent },
+  { path: 'finalizar', component: FinalizarComponent },
   { path: 'configuracao', component: ConfiguracaoComponent },
   { path: '', component: TelaInicialComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }

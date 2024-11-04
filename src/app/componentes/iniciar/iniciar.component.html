@@ -1,9 +1,9 @@
-<h4 class="text-dark text-center">Grupo {{ codigo }}</h4>
-<div class="card-body px-5 pb-5 pt-0" style="min-height: 550px;">
+<h4 class="text-dark text-center mb-8">{{ grupo?.nome }}</h4>
+<div class="card-body px-5 pb-5 pt-0" [ngStyle]="respostaLiberada ? {'min-height': '550px'} : {'height': '550px'}">
 
   <app-carregar-informacoes [iniciarPesquisa]="iniciarPesquisa"
                             (iniciarPesquisaChange)="atualizarInicializarPesquisa($event)"
-                            [perguntas]="perguntas">
+                            [itens]="itens">
   </app-carregar-informacoes>
 
   <div style="height: 90%">
@@ -25,23 +25,37 @@
               </tr>
             </thead>
             <tbody formArrayName="respostas">
-              <tr *ngFor="let pergunta of perguntas; let index = index">
-                <td>{{ index + 1 }}</td>
-                <td style="min-width: 100px">
+              <tr *ngFor="let respostaControl of respostas.controls; let index = index" [formGroupName]="index">
+                <td *ngIf="index <= indexAtual">{{ index + 1 }}</td>
+                <td *ngIf="index <= indexAtual"
+                    style="min-width: 100px">
                   <input class="form-control input-lg"
-                         id="descricao"
-                         [formControlName]="index"
+                         [id]="'resposta-' + index"
+                         [readOnly]="index < indexAtual"
+                         formControlName="resposta"
                          placeholder="Resposta {{ index + 1}}"
                          type="text">
+
+                  <div *ngIf="respostaControl.get('resposta')?.invalid && respostaControl.get('resposta')?.touched">
+                    <small *ngIf="respostaControl.get('resposta')?.hasError('required')" class="text-danger">Resposta obrigatória.</small>
+                  </div>
                 </td>
+
               </tr>
           </table>
         </div>
 
         <div class="text-center">
-          <button class="btn btn-primary btn-pill mb-4"
+          <button *ngIf="indexAtual < itens.length - 1"
+                  class="btn btn-primary btn-pill mb-4"
+                  (click)="responder()"
+                  type="button">
+            PROXIMO
+          </button>
+          <button *ngIf="indexAtual >= itens.length - 1"
+                  class="btn btn-primary btn-pill mb-4"
                   type="submit">
-            FINALIZAR
+            SALVAR
           </button>
         </div>
 
@@ -52,7 +66,9 @@
   </div>
 </div>
 
-<div style="margin-top: 200px"></div>
-<div class="teste">
-  <div class="simple-keyboard"></div>
+<div [ngStyle]="respostaLiberada ? {'display': 'block'} : {'display': 'none'}">
+  <div style="margin-top: 200px"></div>
+  <div class="teste">
+    <div class="simple-keyboard" style="pointer-events: all;"></div>
+  </div>
 </div>
