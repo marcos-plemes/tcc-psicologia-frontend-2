@@ -128,7 +128,7 @@ export class IniciarComponent implements OnInit {
     if (this.form.valid) {
       this.respostasService.cadastrar(this.codigo as number, this.form.value.respostas).subscribe(() => {
         this.router.navigate(['/finalizar']);
-        
+
       }, error => {
         alert('Erro ao finalizar');
       });

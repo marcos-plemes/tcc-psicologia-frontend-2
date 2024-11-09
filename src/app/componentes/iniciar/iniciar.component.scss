@@ -17,7 +17,11 @@
 }
 
 .simple-keyboard {
-  max-width: 850px;
+  font-size: 1.5em;
+}
+
+.simple-keyboard.hg-theme-default .hg-button {
+  height: 110px;
 }
 
 .teste {
@@ -35,5 +39,5 @@
 }
 
 .input {
-  
+
 }

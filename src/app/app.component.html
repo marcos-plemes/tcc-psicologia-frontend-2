@@ -8,7 +8,9 @@
 
             <div class="card-header pb-0">
               <div class="app-brand w-100 d-flex justify-content-start border-bottom-0">
-                <div class="w-100 pl-0" href="/index.html">
+                <div class="w-100 pl-0"
+                     href="/index.html"
+                     *ngIf="!isExperimentoAtivo">
                   <img alt="PUC" height="75" src="https://seeklogo.com/images/P/puc-goias-logo-06AD67F0EA-seeklogo.com.png">
                   <span class="brand-name text-dark">Pontifícia Universidade Católica de Goiás</span>
                 </div>

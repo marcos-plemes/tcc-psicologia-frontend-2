@@ -1,4 +1,3 @@
-<h4 class="text-dark text-center mb-8">{{ grupo?.nome }}</h4>
 <div class="card-body px-5 pb-5 pt-0" [ngStyle]="respostaLiberada ? {'min-height': '550px'} : {'height': '550px'}">
 
   <app-carregar-informacoes [iniciarPesquisa]="iniciarPesquisa"
@@ -6,8 +5,8 @@
                             [itens]="itens">
   </app-carregar-informacoes>
 
-  <div style="height: 90%">
-    <div *ngIf="iniciarPesquisa" class="posicionar-palavra" style="height: 100%; width: 100%">
+  <div style="height: 90%" *ngIf="iniciarPesquisa">
+    <div class="posicionar-palavra" style="height: 100%; width: 100%">
 
       <span style="font-size: 125px">{{ palavraAtual }}</span>
 
