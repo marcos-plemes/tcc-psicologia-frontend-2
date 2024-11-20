@@ -102,6 +102,7 @@ export class IniciarComponent implements OnInit {
 
   keyboardOnChange(input: string): void {
     (this.form.get('respostas') as FormArray)?.at(this.indexAtual)?.get('resposta')?.setValue(input);
+    this.palavraAtual = input;
   };
 
   keyboardButtonPress(button: string): void {
@@ -223,6 +224,9 @@ export class IniciarComponent implements OnInit {
       this.indexAtual++;
       this.respostas.at(this.indexAtual)?.get('inicio')?.setValue(new Date());
       this.keyboard?.clearInput();
+      this.palavraAtual = '';
+    } else {
+      alert('Informe a palavra');
     }
   }
 
