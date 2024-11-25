@@ -25,4 +25,6 @@ export interface OrdemDaPalavraItem {
 
   descricao?: string
 
+  descricaoDaImagem?: string;
+
 }

@@ -16,15 +16,16 @@
 
       <div class="text-center mt-8 posicionar-button" *ngIf="respostaLiberada">
         <div>
-          <button *ngIf="indexAtual < itens.length - 1"
+          <button *ngIf="indexAtual < itens.length"
                   class="btn btn-primary btn-pill mb-4"
                   (click)="responder()"
                   type="button">
             PROXIMO
           </button>
-          <button *ngIf="indexAtual >= itens.length - 1"
+          <button *ngIf="indexAtual >= itens.length"
                   class="btn btn-primary btn-pill mb-4"
-                  type="submit">
+                  (click)="salvar()"
+                  type="button">
             SALVAR
           </button>
         </div>
@@ -35,7 +36,7 @@
   </div>
 </div>
 
-<div [ngStyle]="respostaLiberada && indexAtual < itens.length - 1 ? {'display': 'block'} : {'display': 'none'}">
+<div [ngStyle]="respostaLiberada && indexAtual < itens.length ? {'display': 'block'} : {'display': 'none'}">
   <div style="margin-top: 200px"></div>
   <div class="teste">
     <div class="simple-keyboard" style="pointer-events: all;"></div>

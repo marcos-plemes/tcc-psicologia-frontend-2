@@ -7,6 +7,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { OrdemDasPalavrasService } from "../ordem-das-palavras/ordem-das-palavras.service";
 import { OrdemDaPalavraItem } from "../ordem-das-palavras/OrdemDaPalavraItem.interface";
 import { RespostasService } from "../respostas/respostas.service";
+import { ConfiguracaoUsada } from "./ConfiguracaoUsada";
 
 @Component({
   selector: 'app-iniciar',
@@ -34,6 +35,8 @@ export class IniciarComponent implements OnInit {
   imageUrl: string | ArrayBuffer | null | undefined = null;
 
   respostaLiberada: boolean = false;
+
+  configuracaoUsada: ConfiguracaoUsada[] = [];
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -125,9 +128,17 @@ export class IniciarComponent implements OnInit {
   }
 
   salvar() {
-    this.responder();
+    if (!this.respostas.at(this.indexAtual)?.get('fim')) {
+      this.respostas.at(this.indexAtual)?.get('fim')?.setValue(new Date());
+    }
+
     if (this.form.valid) {
-      this.respostasService.cadastrar(this.codigo as number, this.form.value.respostas).subscribe(() => {
+
+      this.respostasService.cadastrar(this.codigo as number,
+        {
+          respostas: this.form.value.respostas,
+          configuracaoUsada: this.configuracaoUsada
+        }).subscribe(() => {
         this.router.navigate(['/finalizar']);
 
       }, error => {
@@ -177,6 +188,12 @@ export class IniciarComponent implements OnInit {
 
     this.palavraAtual = this.itens[this.indexAtual].descricao as string;
 
+    this.configuracaoUsada.push({
+      mostrouPalavra: this.itens[this.indexAtual].descricao,
+      tempoQueMostrou: this.itens[this.indexAtual].tempoDaPalavraTexto as number,
+      intervaloQueFicou: this.itens[this.indexAtual].intervaloDaPalavraTexto as number
+    });
+
     setTimeout(() => {
       this.palavraAtual = '';
       setTimeout(() => {
@@ -202,6 +219,12 @@ export class IniciarComponent implements OnInit {
       this.imageUrl = this.itens[this.indexAtual].imagem as string;
     }
 
+    this.configuracaoUsada.push({
+      mostrouImagem: this.itens[this.indexAtual].descricaoDaImagem,
+      tempoQueMostrou: this.itens[this.indexAtual].tempoDaPalavraImagem as number,
+      intervaloQueFicou: this.itens[this.indexAtual].intervaloDaPalavraImagem as number
+    });
+
     setTimeout(() => {
       this.imageUrl = '';
       setTimeout(() => {
@@ -218,6 +241,7 @@ export class IniciarComponent implements OnInit {
   }
 
   responder(): void {
+    console.log(this.respostas.value);
     this.respostas.at(this.indexAtual)?.get('resposta')?.markAsTouched();
     if (this.respostas.at(this.indexAtual)?.get('resposta')?.valid) {
       this.respostas.at(this.indexAtual)?.get('fim')?.setValue(new Date());
